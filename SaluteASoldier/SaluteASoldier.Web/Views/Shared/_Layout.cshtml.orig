@@ -15,9 +15,13 @@
         <div class="navbar-inner">
 			<a class="brand" href="#">Salute a Soldier</a>
 			<ul class="nav">
-				<li><a href="@Url.Action("SendMessage")">Home</a></li>
-				<li><a href="@Url.Action("ViewMessages")">Messages</a></li>
-				<li><a href="@Url.Action("ScreenMessages")">Screen</a></li>
+<<<<<<< HEAD
+				<li><a href="#">Home</a></li>
+=======
+				<li class="active"><a href="index.html">Home</a></li>
+				<li><a href="ViewMessages">Messages</a></li>
+				<li><a href="ScreenMessages">Screen</a></li>
+>>>>>>> e173e91265582f226c3251fbaefbd9832686f5c3
 				<li><a href="#">About</a></li>
 				<li><a href="#">Contact</a></li>
 				<li><a href="#">Sign up</a></li>
