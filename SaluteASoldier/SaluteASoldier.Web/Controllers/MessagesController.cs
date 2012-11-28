@@ -62,6 +62,7 @@ namespace SaluteASoldier.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                message.SubmissionDate = DateTime.Now;
                 db.Messages.Add(message);
                 db.SaveChanges();
                 
