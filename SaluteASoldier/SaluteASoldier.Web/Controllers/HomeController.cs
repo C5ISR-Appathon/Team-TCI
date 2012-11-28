@@ -12,5 +12,10 @@ namespace SaluteASoldier.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult SendMessage()
+        {
+            return View();
+        }
     }
 }

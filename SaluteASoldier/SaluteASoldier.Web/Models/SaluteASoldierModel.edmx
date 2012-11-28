@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SaluteASoldierModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="SaluteASoldierModelStoreContainer">
+          <EntitySet Name="Message" EntityType="SaluteASoldierModel.Store.Message" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="SaluteASoldierModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserType" EntityType="SaluteASoldierModel.Store.UserType" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_User_UserType" Association="SaluteASoldierModel.Store.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CanReceive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="SaluteASoldierModel.Store.UserType" Multiplicity="1" />
+          <End Role="User" Type="SaluteASoldierModel.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SaluteASoldierModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SaluteASoldierContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="SaluteASoldierModel.Message" />
+          <EntitySet Name="Users" EntityType="SaluteASoldierModel.User" />
+          <EntitySet Name="UserTypes" EntityType="SaluteASoldierModel.UserType" />
+          <AssociationSet Name="FK_User_UserType" Association="SaluteASoldierModel.FK_User_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserType" Relationship="SaluteASoldierModel.FK_User_UserType" FromRole="User" ToRole="UserType" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CanReceive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="SaluteASoldierModel.FK_User_UserType" FromRole="UserType" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_User_UserType">
+          <End Role="UserType" Type="SaluteASoldierModel.UserType" Multiplicity="1" />
+          <End Role="User" Type="SaluteASoldierModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SaluteASoldierModelStoreContainer" CdmEntityContainer="SaluteASoldierContext">
+          <EntitySetMapping Name="Messages"><EntityTypeMapping TypeName="SaluteASoldierModel.Message"><MappingFragment StoreEntitySet="Message">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Text" ColumnName="Text" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="SaluteASoldierModel.User"><MappingFragment StoreEntitySet="User">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Type" ColumnName="Type" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserTypes"><EntityTypeMapping TypeName="SaluteASoldierModel.UserType"><MappingFragment StoreEntitySet="UserType">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="CanReceive" ColumnName="CanReceive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="SaluteASoldierModel">
+        <EntityTypeShape EntityType="SaluteASoldierModel.Message" Width="1.5" PointX="0.75" PointY="3.75" Height="1.4033821614583335" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaluteASoldierModel.User" Width="1.5" PointX="3" PointY="0.875" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SaluteASoldierModel.UserType" Width="1.5" PointX="0.75" PointY="0.875" Height="1.7879850260416665" IsExpanded="true" />
+        <AssociationConnector Association="SaluteASoldierModel.FK_User_UserType" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.7689925130208333" />
+          <ConnectorPoint PointX="3" PointY="1.7689925130208333" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
