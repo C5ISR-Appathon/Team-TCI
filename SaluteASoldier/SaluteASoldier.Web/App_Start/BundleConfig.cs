@@ -24,6 +24,8 @@ namespace SaluteASoldier.Web
                 "~/Scripts/knockout-2.2.0.js",
                 "~/Scripts/knockout.mapping-latest.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/common").Include("~/Scripts/utility.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
