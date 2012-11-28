@@ -29,7 +29,7 @@ namespace SaluteASoldier.Web.Controllers
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
-
+            
             return message;
         }
 
@@ -64,7 +64,22 @@ namespace SaluteASoldier.Web.Controllers
             {
                 db.Messages.Add(message);
                 db.SaveChanges();
+                
 
+                //Route message to a recipient of the desired type.
+                var possibleRecipients = db.Users.Where(a => a.Type == message.Destination);
+                if (possibleRecipients.Count() != 0)
+                {
+                    var rand = new Random();
+                    var recipient = possibleRecipients.ElementAt(rand.Next(possibleRecipients.Count()));
+                    //Make new unread message assignment and save.
+                    MessageAssignment theNewAssignment = new MessageAssignment();
+                    theNewAssignment.MessageID = message.ID;
+                    theNewAssignment.UserID = recipient.ID;
+                    theNewAssignment.Unread = true;
+                    db.MessageAssignments.Add(theNewAssignment);
+                    db.SaveChanges();
+                }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, message);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = message.ID }));
                 return response;

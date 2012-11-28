@@ -1,4 +1,8 @@
-﻿INSERT [dbo].[UserType] ([ID], [Name], [CanReceive]) VALUES (1, N'Civilian', 0)
+﻿delete from [dbo].[MessageAssignment]
+delete from [dbo].[Message]
+delete from [dbo].[User]
+delete from [dbo].[UserType]
+INSERT [dbo].[UserType] ([ID], [Name], [CanReceive]) VALUES (1, N'Civilian', 0)
 INSERT [dbo].[UserType] ([ID], [Name], [CanReceive]) VALUES (2, N'Active Duty', 1)
 INSERT [dbo].[UserType] ([ID], [Name], [CanReceive]) VALUES (3, N'Veteran', 1)
 INSERT [dbo].[UserType] ([ID], [Name], [CanReceive]) VALUES (4, N'Wounded Warrior', 1)
