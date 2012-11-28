@@ -17,6 +17,7 @@ namespace SaluteASoldier.Web.Models
         public UserType()
         {
             this.Users = new HashSet<User>();
+            this.Messages = new HashSet<Message>();
         }
     
         public int ID { get; set; }
@@ -24,5 +25,6 @@ namespace SaluteASoldier.Web.Models
         public bool CanReceive { get; set; }
     
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

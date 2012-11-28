@@ -11,13 +11,18 @@
             <DefiningQuery>SELECT 
       [MessageAssignment].[ID] AS [ID], 
       [MessageAssignment].[MessageID] AS [MessageID], 
-      [MessageAssignment].[UserID] AS [UserID]
+      [MessageAssignment].[UserID] AS [UserID], 
+      [MessageAssignment].[Unread] AS [Unread]
       FROM [dbo].[MessageAssignment] AS [MessageAssignment]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="User" EntityType="SaluteASoldierModel.Store.User" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserType" EntityType="SaluteASoldierModel.Store.UserType" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Message_User" Association="SaluteASoldierModel.Store.FK_Message_User">
             <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_UserType" Association="SaluteASoldierModel.Store.FK_Message_UserType">
+            <End Role="UserType" EntitySet="UserType" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="FK_MessageAssignment_Message" Association="SaluteASoldierModel.Store.FK_MessageAssignment_Message">
@@ -42,6 +47,7 @@
           <Property Name="Screened" Type="bit" Nullable="false" />
           <Property Name="Originator" Type="int" Nullable="false" />
           <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+          <Property Name="Destination" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'SaluteASoldier.dbo.MessageAssignment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -51,10 +57,12 @@
             <PropertyRef Name="ID" />
             <PropertyRef Name="MessageID" />
             <PropertyRef Name="UserID" />
+            <PropertyRef Name="Unread" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MessageID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Unread" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -81,6 +89,18 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="Originator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_UserType">
+          <End Role="UserType" Type="SaluteASoldierModel.Store.UserType" Multiplicity="1" />
+          <End Role="Message" Type="SaluteASoldierModel.Store.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Destination" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -145,6 +165,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="MessageAssignment" EntitySet="MessageAssignments" />
           </AssociationSet>
+          <AssociationSet Name="FK_Message_UserType" Association="SaluteASoldierModel.FK_Message_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Message">
           <Key>
@@ -157,6 +181,8 @@
           <Property Type="DateTime" Name="SubmissionDate" Nullable="false" />
           <NavigationProperty Name="User" Relationship="SaluteASoldierModel.FK_Message_User" FromRole="Message" ToRole="User" />
           <NavigationProperty Name="MessageAssignments" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="Message" ToRole="MessageAssignment" />
+          <Property Type="Int32" Name="Destination" Nullable="false" />
+          <NavigationProperty Name="UserType" Relationship="SaluteASoldierModel.FK_Message_UserType" FromRole="Message" ToRole="UserType" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -177,6 +203,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="CanReceive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="SaluteASoldierModel.FK_User_UserType" FromRole="UserType" ToRole="User" />
+          <NavigationProperty Name="Messages" Relationship="SaluteASoldierModel.FK_Message_UserType" FromRole="UserType" ToRole="Message" />
         </EntityType>
         <Association Name="FK_User_UserType">
           <End Role="UserType" Type="SaluteASoldierModel.UserType" Multiplicity="1" />
@@ -195,12 +222,14 @@
             <PropertyRef Name="ID" />
             <PropertyRef Name="MessageID" />
             <PropertyRef Name="UserID" />
+            <PropertyRef Name="Unread" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="MessageID" Nullable="false" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <NavigationProperty Name="Message" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="MessageAssignment" ToRole="Message" />
           <NavigationProperty Name="User" Relationship="SaluteASoldierModel.FK_MessageAssignment_User" FromRole="MessageAssignment" ToRole="User" />
+          <Property Type="Boolean" Name="Unread" Nullable="false" />
         </EntityType>
         <Association Name="FK_Message_User">
           <End Type="SaluteASoldierModel.User" Role="User" Multiplicity="1" />
@@ -238,6 +267,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_UserType">
+          <End Type="SaluteASoldierModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="SaluteASoldierModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Destination" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -245,7 +286,8 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SaluteASoldierModelStoreContainer" CdmEntityContainer="SaluteASoldierContext">
           <EntitySetMapping Name="Messages"><EntityTypeMapping TypeName="SaluteASoldierModel.Message"><MappingFragment StoreEntitySet="Message">
-            <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
+            <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
                 <ScalarProperty Name="Originator" ColumnName="Originator" />
                 <ScalarProperty Name="Screened" ColumnName="Screened" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -264,6 +306,7 @@
           <EntitySetMapping Name="MessageAssignments">
             <EntityTypeMapping TypeName="SaluteASoldierModel.MessageAssignment">
               <MappingFragment StoreEntitySet="MessageAssignment">
+                <ScalarProperty Name="Unread" ColumnName="Unread" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="MessageID" ColumnName="MessageID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -296,22 +339,29 @@
         <EntityTypeShape EntityType="SaluteASoldierModel.User" Width="1.5" PointX="3" PointY="0.875" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SaluteASoldierModel.UserType" Width="1.5" PointX="0.75" PointY="0.875" Height="1.7879850260416665" IsExpanded="true" />
         <AssociationConnector Association="SaluteASoldierModel.FK_User_UserType" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="1.7689925130208333" />
-          <ConnectorPoint PointX="3" PointY="1.7689925130208333" />
+          <ConnectorPoint PointX="2.25" PointY="1.8651432291666668" />
+          <ConnectorPoint PointX="3" PointY="1.8651432291666668" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SaluteASoldierModel.MessageAssignment" Width="1.5" PointX="3" PointY="3.875" Height="1.9802864583333335" />
         <AssociationConnector Association="SaluteASoldierModel.FK_Message_User" >
-          <ConnectorPoint PointX="4.5" PointY="1.71875" />
-          <ConnectorPoint PointX="6.625" PointY="1.71875" />
+          <ConnectorPoint PointX="4.5" PointY="1.9612939453124998" />
+          <ConnectorPoint PointX="6.625" PointY="1.9612939453124998" />
         </AssociationConnector>
         <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_Message" >
-          <ConnectorPoint PointX="7.375" PointY="3.2398893229166656" />
-          <ConnectorPoint PointX="7.375" PointY="4.8651432291666667" />
-          <ConnectorPoint PointX="4.5" PointY="4.8651432291666667" />
+          <ConnectorPoint PointX="7.375" PointY="3.6244921875" />
+          <ConnectorPoint PointX="7.375" PointY="4.9612939453125" />
+          <ConnectorPoint PointX="4.5" PointY="4.9612939453125" />
         </AssociationConnector>
         <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_User" >
           <ConnectorPoint PointX="3.75" PointY="3.047587890625" />
           <ConnectorPoint PointX="3.75" PointY="3.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="SaluteASoldierModel.FK_Message_UserType" >
+          <ConnectorPoint PointX="1.5" PointY="2.8552864583333331" />
+          <ConnectorPoint PointX="1.5" PointY="3.3672900390624996" />
+          <ConnectorPoint PointX="3.6666666666666665" PointY="3.3672900390624991" />
+          <ConnectorPoint PointX="3.8333333333333335" PointY="3.3672900390624996" />
+          <ConnectorPoint PointX="6.625" PointY="3.3672900390624996" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
