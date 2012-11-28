@@ -182,5 +182,6 @@
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="dbo\Tables\MessageAssignment.sql" />
     <Build Include="dbo\Tables\Message.sql" />
+    <None Include="Scripts\Post-Deployment\ExampleData_Insert.sql" />
   </ItemGroup>
 </Project>

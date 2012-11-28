@@ -17,6 +17,7 @@ namespace SaluteASoldier.Web.Models
         public int ID { get; set; }
         public int MessageID { get; set; }
         public int UserID { get; set; }
+        public bool Unread { get; set; }
     
         public virtual Message Message { get; set; }
         public virtual User User { get; set; }
