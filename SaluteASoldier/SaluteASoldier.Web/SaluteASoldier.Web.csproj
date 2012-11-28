@@ -301,6 +301,7 @@
     <None Include="Content\less\close.less" />
     <None Include="Content\less\code.less" />
     <None Include="Content\less\component-animations.less" />
+    <None Include="Content\less\custom.less" />
     <None Include="Content\less\dropdowns.less" />
     <None Include="Content\less\forms.less" />
     <None Include="Content\less\grid.less" />
@@ -340,7 +341,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SaluteASoldierModel.cs</LastGenOutput>
     </None>
-    <None Include="Properties\PublishProfiles\saluteasoldier - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\saluteasoldier - FTP.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\saluteasoldier - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
