@@ -13,26 +13,32 @@
 </head>
     <body>
         <div class="navbar">
-        <div class="navbar-inner">
-			<a class="brand" href="#">Salute a Soldier</a>
-            <ul class="nav">
-                <li><a href="@Url.Action("SendMessage")">Home</a></li>
-                <li><a href="@Url.Action("ViewMessages")">Messages</a></li>
-                <li><a href="@Url.Action("ScreenMessages")">Screen</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Sign up</a></li>
-                <div class="btn-group">
-							<a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i>Select User</a>
-							<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Demo Civilian</a></li>
-								<li><a href="#">Demo Veteran</a></li>
-								<li><a href="#">Demo Active Duty</a></li>
-							</ul>
-				</div>
-            </ul>
-		</div>
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Salute a Soldier</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="@Url.Action("SendMessage")">Home</a></li>
+                            <li><a href="@Url.Action("ViewMessages")">Messages</a></li>
+                            <li><a href="@Url.Action("ScreenMessages")">Screen</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Sign up</a></li>
+                            <li style="border-width: 10px"><select>
+                                    <option>Demo Civilian</option>
+                                    <option>Demo Veteran</option>
+                                    <option>Demo Active Duty</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 	    </div>
         @RenderBody()
 
