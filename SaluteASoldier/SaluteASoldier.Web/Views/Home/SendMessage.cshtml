@@ -3,4 +3,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="jumbotron">
+        <h2>Send a message to a hero today!</h2>
+        <p class="lead">Welcome to Salute a Soldier, a tool that allows you to anonymously send a message of inspiration
+		to a soldier, veteran, or family of an American hero!</p>
+		<div align="center">
+		<select>
+				<option>Active-Duty Soldier</option>
+				<option>Wounded Warrior</option>
+				<option>Veteran</option>
+				<option>Family</option>
+				<option>POW-MIA</option>
+		</select>
+		<textarea style="width:75%;" align="center" rows="10"></textarea>
+			<br>
+			<a class="btn btn-large btn-primary" href="#">Send Message</a>
+	    </div>
+</div>
+
+<hr>
+
+<div class="footer">
+    <p>&copy; TeamTCI 2012</p>
+</div>
+
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js"></script>
