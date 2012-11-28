@@ -8,11 +8,8 @@
     <p class="lead">Welcome to Salute a Soldier, a tool that allows you to anonymously send a message of inspiration
         to a soldier, veteran, or family of an American hero!</p>
     <div align="center">
-        <select data-bind="value: Destination">
-            <option value="1">Active Duty Soldier</option>
-            <option value="2">Wounded Warrior</option>
-            <option value="3">Veteran</option>
-            <option value="4">Family</option>
+        <select data-bind="foreach: UserTypes, value: Destination">
+            <option data-bind="attr: {value: ID}, text: Name"></option>
         </select>
         <br/>
         <textarea style="width:75%;" align="center" rows="10" data-bind="value: Text"></textarea>

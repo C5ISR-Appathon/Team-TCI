@@ -17,14 +17,9 @@ namespace SaluteASoldier.Web.Controllers
         private SaluteASoldierContext db = new SaluteASoldierContext();
 
         // GET api/UserTypes
-        public IEnumerable<UserType> GetUserTypes()
-        {
-            return db.UserTypes.AsEnumerable();
-        }
-
-        // GET api/UserTypes
         public IEnumerable<UserType> GetUserTypesCanReceive()
         {
+            db.Configuration.LazyLoadingEnabled = false;
             return db.UserTypes.Where(a=>a.CanReceive).AsEnumerable();
         }
 
