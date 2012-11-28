@@ -12,7 +12,7 @@
     };
 
     self.SendMessageComplete = function (response) {
-        alert(response);
+        $('#myModal').modal('show');
     };
 
     self.LoadUserTypes = function () {
@@ -35,7 +35,7 @@ function MessageDal() {
         $.post(self.ApiUrl, { Text: message.Text(), Destination: message.Destination() })
             .success(function (response) { callback(response); })
             .error(function (xhr, textStatus, errorThrown) {
-                callback(xhr.responseText);
+                alert(xhr.responseText);
             });
         };
 }
