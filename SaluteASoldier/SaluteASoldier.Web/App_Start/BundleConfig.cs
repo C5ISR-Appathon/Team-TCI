@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SaluteASoldier
+namespace SaluteASoldier.Web
 {
     public class BundleConfig
     {
