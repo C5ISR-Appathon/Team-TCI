@@ -132,6 +132,9 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>SaluteASoldierModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageAssignment.cs">
+      <DependentUpon>SaluteASoldierModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SaluteASoldierModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

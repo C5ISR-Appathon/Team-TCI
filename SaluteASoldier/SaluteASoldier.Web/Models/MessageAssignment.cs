@@ -12,20 +12,13 @@ namespace SaluteASoldier.Web.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class MessageAssignment
     {
-        public User()
-        {
-            this.Messages = new HashSet<Message>();
-            this.MessageAssignments = new HashSet<MessageAssignment>();
-        }
-    
         public int ID { get; set; }
-        public string Name { get; set; }
-        public int Type { get; set; }
+        public int MessageID { get; set; }
+        public int UserID { get; set; }
     
-        public virtual UserType UserType { get; set; }
-        public virtual ICollection<Message> Messages { get; set; }
-        public virtual ICollection<MessageAssignment> MessageAssignments { get; set; }
+        public virtual Message Message { get; set; }
+        public virtual User User { get; set; }
     }
 }

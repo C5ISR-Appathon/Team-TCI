@@ -14,7 +14,18 @@ namespace SaluteASoldier.Web.Models
     
     public partial class Message
     {
+        public Message()
+        {
+            this.MessageAssignments = new HashSet<MessageAssignment>();
+        }
+    
         public int ID { get; set; }
         public string Text { get; set; }
+        public bool Screened { get; set; }
+        public int Originator { get; set; }
+        public System.DateTime SubmissionDate { get; set; }
+    
+        public virtual User User { get; set; }
+        public virtual ICollection<MessageAssignment> MessageAssignments { get; set; }
     }
 }
