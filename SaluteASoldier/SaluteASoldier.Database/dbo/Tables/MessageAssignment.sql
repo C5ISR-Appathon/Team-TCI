@@ -4,6 +4,6 @@
     [UserID]    INT NOT NULL,
     CONSTRAINT [FK_MessageAssignment_Message] FOREIGN KEY ([MessageID]) REFERENCES [dbo].[Message] ([ID]),
     CONSTRAINT [FK_MessageAssignment_User] FOREIGN KEY ([UserID]) REFERENCES [dbo].[User] ([ID]),
-    CONSTRAINT [IX_MessageAssignment] UNIQUE NONCLUSTERED ([MessageID] ASC, [UserID] ASC)
+    CONSTRAINT [IX_MessageAssignment] UNIQUE CLUSTERED ([MessageID] ASC, [UserID] ASC)
 );
 
