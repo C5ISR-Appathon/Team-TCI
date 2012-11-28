@@ -3,14 +3,26 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>Salute a Soldier</title>
     @Styles.Render("~/Content/themes/base/css", "~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
 </head>
-<body>
-    @RenderBody()
+    <body>
+        <div class="navbar">
+        <div class="navbar-inner">
+			<a class="brand" href="#">Salute a Soldier</a>
+			<ul class="nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="#">Sign up</a></li>
+			</ul>
+		</div>
+	    </div>
+        @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
