@@ -9,11 +9,8 @@
         to a soldier, veteran, or family of an American hero!</p>
     <div align="center">
         <h3>Step 1: Select a Recipient</h3>
-        <select data-bind="value: Destination">
-            <option value="1">Active Duty Soldier</option>
-            <option value="2">Wounded Warrior</option>
-            <option value="3">Veteran</option>
-            <option value="4">Family</option>
+        <select data-bind="foreach: UserTypes, value: Destination">
+            <option data-bind="attr: {value: ID}, text: Name"></option>
         </select>
         <br/>
         <h3>Step 2: Enter Your Message</h3>
