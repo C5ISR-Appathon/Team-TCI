@@ -24,8 +24,10 @@ namespace SaluteASoldier.Web.Models
         public bool Screened { get; set; }
         public int Originator { get; set; }
         public System.DateTime SubmissionDate { get; set; }
+        public int Destination { get; set; }
     
         public virtual User User { get; set; }
         public virtual ICollection<MessageAssignment> MessageAssignments { get; set; }
+        public virtual UserType UserType { get; set; }
     }
 }
