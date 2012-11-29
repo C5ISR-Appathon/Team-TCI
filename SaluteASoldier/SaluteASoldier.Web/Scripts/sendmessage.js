@@ -12,7 +12,8 @@
     };
 
     self.SendMessageComplete = function (response) {
-        $('#myModal').modal('show');
+        self.Text("");
+        $('#confirmSubmit').modal('show');
     };
 
     self.LoadUserTypes = function () {

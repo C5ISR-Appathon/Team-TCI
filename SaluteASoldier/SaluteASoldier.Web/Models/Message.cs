@@ -27,7 +27,7 @@ namespace SaluteASoldier.Web.Models
         public int Destination { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ICollection<MessageAssignment> MessageAssignments { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual ICollection<MessageAssignment> MessageAssignments { get; set; }
     }
 }

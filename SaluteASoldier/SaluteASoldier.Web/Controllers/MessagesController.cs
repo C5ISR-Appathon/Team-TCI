@@ -79,7 +79,7 @@ namespace SaluteASoldier.Web.Controllers
                     db.MessageAssignments.Add(theNewAssignment);
                     db.SaveChanges();
                 }
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, message);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = message.ID }));
                 return response;
             }

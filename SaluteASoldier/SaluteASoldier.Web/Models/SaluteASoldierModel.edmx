@@ -139,11 +139,15 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="MessageAssignments" EntityType="SaluteASoldierModel.MessageAssignment" />
           <AssociationSet Name="FK_Message_User" Association="SaluteASoldierModel.FK_Message_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
+          <AssociationSet Name="FK_Message_UserType" Association="SaluteASoldierModel.FK_Message_UserType">
+            <End Role="UserType" EntitySet="UserTypes" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <EntitySet Name="MessageAssignments" EntityType="SaluteASoldierModel.MessageAssignment" />
           <AssociationSet Name="FK_MessageAssignment_Message" Association="SaluteASoldierModel.FK_MessageAssignment_Message">
             <End Role="Message" EntitySet="Messages" />
             <End Role="MessageAssignment" EntitySet="MessageAssignments" />
@@ -151,10 +155,6 @@
           <AssociationSet Name="FK_MessageAssignment_User" Association="SaluteASoldierModel.FK_MessageAssignment_User">
             <End Role="User" EntitySet="Users" />
             <End Role="MessageAssignment" EntitySet="MessageAssignments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Message_UserType" Association="SaluteASoldierModel.FK_Message_UserType">
-            <End Role="UserType" EntitySet="UserTypes" />
-            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Message">
@@ -167,9 +167,9 @@
           <Property Type="Int32" Name="Originator" Nullable="false" />
           <Property Type="DateTime" Name="SubmissionDate" Nullable="false" />
           <NavigationProperty Name="User" Relationship="SaluteASoldierModel.FK_Message_User" FromRole="Message" ToRole="User" />
-          <NavigationProperty Name="MessageAssignments" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="Message" ToRole="MessageAssignment" />
           <Property Type="Int32" Name="Destination" Nullable="false" />
           <NavigationProperty Name="UserType" Relationship="SaluteASoldierModel.FK_Message_UserType" FromRole="Message" ToRole="UserType" />
+          <NavigationProperty Name="MessageAssignments" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="Message" ToRole="MessageAssignment" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -204,20 +204,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="MessageAssignment">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="MessageID" />
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="Unread" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="MessageID" Nullable="false" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <NavigationProperty Name="Message" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="MessageAssignment" ToRole="Message" />
-          <NavigationProperty Name="User" Relationship="SaluteASoldierModel.FK_MessageAssignment_User" FromRole="MessageAssignment" ToRole="User" />
-          <Property Type="Boolean" Name="Unread" Nullable="false" />
-        </EntityType>
         <Association Name="FK_Message_User">
           <End Type="SaluteASoldierModel.User" Role="User" Multiplicity="1" />
           <End Type="SaluteASoldierModel.Message" Role="Message" Multiplicity="*" />
@@ -230,6 +216,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_UserType">
+          <End Type="SaluteASoldierModel.UserType" Role="UserType" Multiplicity="1" />
+          <End Type="SaluteASoldierModel.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Destination" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MessageAssignment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MessageID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="Unread" Nullable="false" />
+          <NavigationProperty Name="Message" Relationship="SaluteASoldierModel.FK_MessageAssignment_Message" FromRole="MessageAssignment" ToRole="Message" />
+          <NavigationProperty Name="User" Relationship="SaluteASoldierModel.FK_MessageAssignment_User" FromRole="MessageAssignment" ToRole="User" />
+        </EntityType>
         <Association Name="FK_MessageAssignment_Message">
           <End Type="SaluteASoldierModel.Message" Role="Message" Multiplicity="1" />
           <End Type="SaluteASoldierModel.MessageAssignment" Role="MessageAssignment" Multiplicity="*" />
@@ -251,18 +260,6 @@
             </Principal>
             <Dependent Role="MessageAssignment">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Message_UserType">
-          <End Type="SaluteASoldierModel.UserType" Role="UserType" Multiplicity="1" />
-          <End Type="SaluteASoldierModel.Message" Role="Message" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Message">
-              <PropertyRef Name="Destination" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -329,26 +326,26 @@
           <ConnectorPoint PointX="2.25" PointY="1.8651432291666668" />
           <ConnectorPoint PointX="3" PointY="1.8651432291666668" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SaluteASoldierModel.MessageAssignment" Width="1.5" PointX="3" PointY="3.875" Height="1.9802864583333335" />
         <AssociationConnector Association="SaluteASoldierModel.FK_Message_User" >
-          <ConnectorPoint PointX="4.5" PointY="1.9612939453124998" />
-          <ConnectorPoint PointX="6.625" PointY="1.9612939453124998" />
-        </AssociationConnector>
-        <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_Message" >
-          <ConnectorPoint PointX="7.375" PointY="3.6244921875" />
-          <ConnectorPoint PointX="7.375" PointY="4.9612939453125" />
-          <ConnectorPoint PointX="4.5" PointY="4.9612939453125" />
-        </AssociationConnector>
-        <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_User" >
-          <ConnectorPoint PointX="3.75" PointY="3.047587890625" />
-          <ConnectorPoint PointX="3.75" PointY="3.875" />
+          <ConnectorPoint PointX="4.5" PointY="1.9612939453125" />
+          <ConnectorPoint PointX="6.625" PointY="1.9612939453125" />
         </AssociationConnector>
         <AssociationConnector Association="SaluteASoldierModel.FK_Message_UserType" >
           <ConnectorPoint PointX="1.5" PointY="2.8552864583333331" />
           <ConnectorPoint PointX="1.5" PointY="3.3672900390624996" />
-          <ConnectorPoint PointX="3.6666666666666665" PointY="3.3672900390624991" />
-          <ConnectorPoint PointX="3.8333333333333335" PointY="3.3672900390624996" />
+          <ConnectorPoint PointX="4.166666666666667" PointY="3.3672900390624991" />
+          <ConnectorPoint PointX="4.333333333333333" PointY="3.3672900390624996" />
           <ConnectorPoint PointX="6.625" PointY="3.3672900390624996" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="SaluteASoldierModel.MessageAssignment" Width="1.5" PointX="4" PointY="4.25" Height="2.1725878906249996" />
+        <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_Message" >
+          <ConnectorPoint PointX="6.625" PointY="3.5271436132812495" />
+          <ConnectorPoint PointX="5.03125" PointY="3.5271436132812495" />
+          <ConnectorPoint PointX="5.03125" PointY="4.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="SaluteASoldierModel.FK_MessageAssignment_User" >
+          <ConnectorPoint PointX="4.25" PointY="3.047587890625" />
+          <ConnectorPoint PointX="4.25" PointY="4.25" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
