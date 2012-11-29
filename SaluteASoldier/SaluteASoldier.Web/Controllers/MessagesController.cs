@@ -77,7 +77,7 @@ namespace SaluteASoldier.Web.Controllers
                 
 
                 //Route message to a recipient of the desired type.
-                var possibleRecipients = db.Users.Where(a => a.Type == message.Destination);
+                var possibleRecipients = db.Users.Where(a => a.Type == message.Destination).ToList();
                 if (possibleRecipients.Count() != 0)
                 {
                     var rand = new Random();
