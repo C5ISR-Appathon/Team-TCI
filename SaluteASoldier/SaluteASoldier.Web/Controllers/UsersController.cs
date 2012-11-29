@@ -19,7 +19,8 @@ namespace SaluteASoldier.Web.Controllers
         // GET api/Users
         public IEnumerable<User> GetUsers()
         {
-            var users = db.Users.Include(u => u.UserType);
+            db.Configuration.LazyLoadingEnabled = false;
+            var users = db.Users;
             return users.AsEnumerable();
         }
 
