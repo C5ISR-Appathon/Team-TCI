@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
+<div id="sendmessage" class="jumbotron">
     <h2>Send a message to a hero today!</h2>
     <p class="lead">Welcome to Salute a Soldier, a tool that allows you to anonymously send a message of inspiration
         to a soldier, veteran, or family of an American hero!</p>
@@ -44,5 +44,5 @@
 
 <script type="text/javascript">
     setActiveNavItem("Home");
-    ko.applyBindings(new MessageViewModel());
+    ko.applyBindings(new MessageViewModel(), document.getElementById("sendmessage"));
 </script>

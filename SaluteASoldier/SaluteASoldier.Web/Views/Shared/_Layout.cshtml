@@ -30,19 +30,23 @@
                             <li><a href="#">About</a></li>
                             <li><a href="#">Contact</a></li>
                             <li><a href="#">Sign up</a></li>
-                            <li style="border-width: 10px"><select>
-                                    <option>Demo Civilian</option>
-                                    <option>Demo Veteran</option>
-                                    <option>Demo Active Duty</option>
-                                </select>
+                            <li style="border-width: 10px"><select id="users" data-bind="foreach: Users, value: SelectedUserId">
+                                                               <option data-bind="attr: {value: ID}, text: Name"></option>
+                                                           </select>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-	    </div>
+        </div>
         @RenderBody()
 
         @RenderSection("scripts", required: false)
     </body>
+    
+    @Scripts.Render("~/Scripts/user.js")
+    <script type="text/javascript">
+        var userVM = new UserViewModel();
+        ko.applyBindings(userVM, document.getElementById("users"));
+    </script>
 </html>
