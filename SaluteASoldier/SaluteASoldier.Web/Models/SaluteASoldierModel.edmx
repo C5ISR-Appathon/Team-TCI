@@ -7,14 +7,7 @@
     <Schema Namespace="SaluteASoldierModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="SaluteASoldierModelStoreContainer">
           <EntitySet Name="Message" EntityType="SaluteASoldierModel.Store.Message" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="MessageAssignment" EntityType="SaluteASoldierModel.Store.MessageAssignment" store:Type="Tables" store:Schema="dbo" store:Name="MessageAssignment">
-            <DefiningQuery>SELECT 
-      [MessageAssignment].[ID] AS [ID], 
-      [MessageAssignment].[MessageID] AS [MessageID], 
-      [MessageAssignment].[UserID] AS [UserID], 
-      [MessageAssignment].[Unread] AS [Unread]
-      FROM [dbo].[MessageAssignment] AS [MessageAssignment]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="MessageAssignment" EntityType="SaluteASoldierModel.Store.MessageAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User" EntityType="SaluteASoldierModel.Store.User" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserType" EntityType="SaluteASoldierModel.Store.UserType" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Message_User" Association="SaluteASoldierModel.Store.FK_Message_User">
@@ -49,15 +42,9 @@
           <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
           <Property Name="Destination" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'SaluteASoldier.dbo.MessageAssignment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="MessageAssignment">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="MessageID" />
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="Unread" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MessageID" Type="int" Nullable="false" />
