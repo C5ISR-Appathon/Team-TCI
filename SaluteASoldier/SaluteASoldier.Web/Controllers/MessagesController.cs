@@ -22,21 +22,10 @@ namespace SaluteASoldier.Web.Controllers
         }
 
         // GET api/Messages/5
-        public Message GetMessage(int id)
+        public IEnumerable<Message> GetMessagesForUser(int id)
         {
-            Message message = db.Messages.Find(id);
-            if (message == null)
-            {
-                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
-            }
-            
-            return message;
-        }
-
-        // GET api/Messages/5
-        public IEnumerable<Message> GetMessagesForUser(int userId)
-        {
-            var messagesIds = db.MessageAssignments.Where(a=>a.UserID==userId).Select(a=>a.MessageID);
+            db.Configuration.LazyLoadingEnabled = false;
+            var messagesIds = db.MessageAssignments.Where(a=>a.UserID==id).Select(a=>a.MessageID);
             var messages = db.Messages.Where(a => messagesIds.Contains(a.ID));
 
             return messages;

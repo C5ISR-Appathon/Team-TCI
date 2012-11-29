@@ -3,30 +3,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
+<div id="viewmessages" class="jumbotron">
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>From</th>
 					<th>Date</th>
 					<th>Message</th>
 				</tr>				
 			</thead>
-			<tbody>
+			<tbody data-bind="foreach: Messages">
 				<tr>
-					<td><!--insert script for retrieving from db-->Former USMC</td>
-					<td><!--insert script for retrieving from db-->11/27/12 12:15:32 PM</td>
-					<td><!--insert script for retrieving from db--><a href="#firstMessage" data-toggle="modal">Semper-Fi!</td>
-				</tr>
-				<tr>
-					<td><!--insert script for retrieving from db-->Civilian</td>
-					<td><!--insert script for retrieving from db-->11/10/12 8:05:52 PM</td>
-					<td><!--insert script for retrieving from db-->Thank you for your service!</td>
-				</tr>
-				<tr>
-					<td><!--insert script for retrieving from db-->Civilian</td>
-					<td><!--insert script for retrieving from db-->10/23/12 6:23:43 PM</td>
-					<td><!--insert script for retrieving from db-->Keep fighting for our freedom.</td>
+					
+                    <td data-bind="html: SubmissionDate"></td>
+					<td><a href="#firstMessage" data-toggle="modal" data-bind="html: Text"></a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -53,8 +42,11 @@
 
 
     <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap.min.js"></script>  
-    
-<script type="text/javascript">
+    @Scripts.Render("~/Scripts/messagedal.js")
+    @Scripts.Render("~/Scripts/viewmessages.js")
+
+    <script type="text/javascript">
         setActiveNavItem("Messages");
-</script>     
+        ko.applyBindings(new ViewMessagesViewModel(), document.getElementById("viewmessages"));
+    </script>     
 
